@@ -23,8 +23,8 @@ Mochammad Atha Tajuddin | 5027241093
 Naufal Ardhana | 5027241118
 
 ## Deskripsi Soal
-
-> Insert testcase... (contoh dibawah) // hapus line ini
+Read Only File 
+Buatlah sebuah FUSE file system sederhana yang me-mount sebuah direktori dalam mode read-only. Kalian hanya dapat melihat dan membaca file, serta masuk ke dalam subdirektori. Maka dari itu, setiap upaya untuk memodifikasi (membuat, menulis, menghapus) harus gagal dengan error "Gabisa ya huhu".
 
 Memahami race condition pada operasi check-then-act. Program membuat 2 thread; tiap thread mencoba mengambil satu-satunya sumber daya yang tersedia dari variabel global stok (nilai awal 1). Jika tanpa mutex, kedua thread bisa lolos pengecekan dan sama-sama mengambil sumber daya, menghasilkan nilai akhir stok menjadi -1.
 
@@ -34,8 +34,14 @@ Memahami race condition pada operasi check-then-act. Program membuat 2 thread; t
 
 Struktur repository:
 ```
-.
-..
+readonly-fs/
+├── src/
+│ └── readonly_fs.c 
+├── papers/
+│ ├── Paper1_FAST2017.pdf 
+│ └── Paper2_ACM2019.pdf 
+├── README.md 
+└── .gitignore
 ```
 
 ## Pengerjaan
@@ -44,11 +50,48 @@ Struktur repository:
 
 **Teori**
 
-...
+FUSE (*Filesystem in Userspace*) adalah framework untuk mengembangkan sistem file di ruang pengguna tanpa perlu menulis modul kernel. FUSE terdiri dari dua komponen utama:
+- Modul kernel: menerima request dari sistem dan meneruskannya ke daemon pengguna.
+- FUSE daemon: menangani operasi file system secara logika.
+
+Salah satu keuntungan utama dari FUSE adalah kemudahan pengembangan dan keamanan karena crash di user-space tidak menyebabkan sistem crash.
+
+Dalam konteks ini, sistem file dibuat hanya untuk **read-only**, sehingga operasi seperti `write`, `create`, `unlink`, `mkdir`, `rename` harus diblokir. Error khas untuk filesystem semacam ini adalah `EROFS` (*Error Read-Only File System*).
 
 **Solusi**
 
-...
+Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
+
+1. **Mount Source Folder**  
+   Direktori sumber ditentukan sebagai:
+   ```c
+   static const char *source_dir = "/Users/dina-r/Desktop/finalssp/source_dir";
+2. **Operasi yang Diizinkan**
+   
+   Fungsi berikut diimplementasikan untuk mendukung operasi navigasi dan baca:
+   `getarr`
+   `readdir`
+   `open`
+   `read`
+4. **Operasi yang Ditolak**
+   
+   Semua fungsi modifikasi dialihkan ke satu fungsi `xmp_writeblock()` yang menampilkan pesan dan mengembalikan `-EROFS`:
+   ```
+   static int xmp_writeblock() {
+    fprintf(stderr, "Gabisa ya huhu\n");
+    return -EROFS;
+   ```
+   Kemudian fungsi tersebut dipasang pada:
+   ```
+   .mkdir   = (void*) xmp_writeblock,
+   .unlink  = (void*) xmp_writeblock,
+   .rmdir   = (void*) xmp_writeblock,
+   .rename  = (void*) xmp_writeblock,
+   .write   = (void*) xmp_writeblock,
+   .create  = (void*) xmp_writeblock,
+   ```
+6. **Kompilasi dan Eksekusi**
+   
 
 > Insert poin soal...
 
@@ -65,6 +108,13 @@ Struktur repository:
 
 ## Daftar Pustaka
 
-Sitasi 1
-Sitasi 2
+1. Vangoor, B. K. R., Tarasov, V., & Zadok, E. (2017).
+   To FUSE or Not to FUSE: Performance of User-Space File Systems.
+   FAST '17: 15th USENIX Conference on File and Storage Technologies.
+   https://www.usenix.org/conference/fast17/technical-sessions/presentation/vangoor
+2. Vangoor, B. K. R., et al. (2019).
+   Performance and Resource Utilization of FUSE User-Space File Systems.
+   ACM Transactions on Storage (TOS), Vol. 15, No. 2, Article 15.
+   https://doi.org/10.1145/3310148
+   
 Sitasi 3
