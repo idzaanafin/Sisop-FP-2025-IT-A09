@@ -108,5 +108,7 @@ Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
 1. Vangoor, B. K. R., Tarasov, V., & Zadok, E. (2017). *To FUSE or Not to FUSE: Performance of User‑Space File Systems*. FAST ’17: 15th USENIX Conference on File and Storage Technologies.
    https://www.usenix.org/conference/fast17/technical-sessions/presentation/vangoor
 2. Vangoor, B. K. R., Agarwal, P., Mathew, M., et al. (2019). *Performance and Resource Utilization of FUSE User‑Space File Systems*. ACM Transactions on Storage, 15(2), Article 15. DOI: 10.1145/3310148
+3. Maas, A. (2019). *Writing a less simple yet stupid filesystem using FUSE in C*. maastaar.net.
+ https://maastaar.net/fuse/linux/filesystem/c/2019/09/28/writing-less-simple-yet-stupid-filesystem-using-FUSE-in-C/
    
-Sitasi 3
+
