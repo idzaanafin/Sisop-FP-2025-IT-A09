@@ -105,13 +105,8 @@ Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
 
 ## Daftar Pustaka
 
-1. Vangoor, B. K. R., Tarasov, V., & Zadok, E. (2017).
-   To FUSE or Not to FUSE: Performance of User-Space File Systems.
-   FAST '17: 15th USENIX Conference on File and Storage Technologies.
+1. Vangoor, B. K. R., Tarasov, V., & Zadok, E. (2017). *To FUSE or Not to FUSE: Performance of User‑Space File Systems*. FAST ’17: 15th USENIX Conference on File and Storage Technologies.
    https://www.usenix.org/conference/fast17/technical-sessions/presentation/vangoor
-2. Vangoor, B. K. R., et al. (2019).
-   Performance and Resource Utilization of FUSE User-Space File Systems.
-   ACM Transactions on Storage (TOS), Vol. 15, No. 2, Article 15.
-   https://doi.org/10.1145/3310148
+2. Vangoor, B. K. R., Agarwal, P., Mathew, M., et al. (2019). *Performance and Resource Utilization of FUSE User‑Space File Systems*. ACM Transactions on Storage, 15(2), Article 15. DOI: 10.1145/3310148
    
 Sitasi 3
