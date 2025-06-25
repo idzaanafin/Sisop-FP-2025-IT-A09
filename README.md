@@ -26,24 +26,19 @@ Naufal Ardhana | 5027241118
 Read Only File 
 Buatlah sebuah FUSE file system sederhana yang me-mount sebuah direktori dalam mode read-only. Kalian hanya dapat melihat dan membaca file, serta masuk ke dalam subdirektori. Maka dari itu, setiap upaya untuk memodifikasi (membuat, menulis, menghapus) harus gagal dengan error "Gabisa ya huhu".
 
-Memahami race condition pada operasi check-then-act. Program membuat 2 thread; tiap thread mencoba mengambil satu-satunya sumber daya yang tersedia dari variabel global stok (nilai awal 1). Jika tanpa mutex, kedua thread bisa lolos pengecekan dan sama-sama mengambil sumber daya, menghasilkan nilai akhir stok menjadi -1.
-
 ### Catatan
-
-> Insert catatan dari pengerjaan kalian... (contoh dibawah) // hapus line ini
 
 Struktur repository:
 ```
 Sisop-FP-2025-IT-A09
 ├── src
 │ └── readonly_fs.c 
-├── README.md 
-└── .gitignore
+└─── README.md 
 ```
 
 ## Pengerjaan
 
-> Insert poin soal...
+### 1. Implemenetasi FUSE  
 
 **Teori**
 
@@ -53,7 +48,8 @@ FUSE (*Filesystem in Userspace*) adalah framework untuk mengembangkan sistem fil
 
 Salah satu keuntungan utama dari FUSE adalah kemudahan pengembangan dan keamanan karena crash di user-space tidak menyebabkan sistem crash.
 
-Dalam konteks ini, sistem file dibuat hanya untuk **read-only** itu berarti jika dalam file permission maka level hak aksesnya ialah *004* karena sistem file dibuat dengan hak akses non-root serta read-only (dengan urutan owner,groups,public) , sehingga operasi seperti write, create, unlink, mkdir, rename harus diblokir. Error khas untuk filesystem semacam ini adalah EROFS (*Error Read-Only File System*).
+Dalam konteks ini, sistem file dibuat hanya untuk **read-only** itu berarti jika dalam file permission maka level hak aksesnya ialah **004** karena sistem file dibuat dengan hak akses non-root serta read-only (dengan urutan owner,groups,public) , sehingga operasi seperti write, create, unlink, mkdir, rename harus diblokir. Error khas untuk filesystem semacam ini adalah EROFS (*Error Read-Only File System*).
+
 **Solusi**
 
 Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
@@ -61,7 +57,7 @@ Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
 1. **Mount Source Folder**  
    Direktori sumber ditentukan sebagai:
    ```c
-   static const char *source_dir = "/Users/dina-r/Desktop/finalssp/source_dir";
+   static const char *source_dir = "/Users/dina-r/Desktop/finalssp/source_dir"; (direktori menyesuaikan yang ingin dimount)
 2. **Operasi yang Diizinkan**
    
    Fungsi berikut diimplementasikan untuk mendukung operasi navigasi dan baca:
@@ -86,16 +82,12 @@ Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
    .write   = (void*) xmp_writeblock,
    .create  = (void*) xmp_writeblock,
    ```
-6. **Kompilasi dan Eksekusi**
-   
-
-> Insert poin soal...
-
-**Teori**
-
-...
-
-**Solusi**
+5. **Kompilasi dan Eksekusi**
+   Kompilasi memerlukan librari fuse tambahan
+   ## Linux
+      - gcc -Wall namefile.c -o namefile `pkg-config fuse3 --cflags --libs`
+   ## Mac
+      - gcc -Wall -lfuse namefile.c -o namefile
 
 ...
 
