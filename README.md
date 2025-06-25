@@ -34,12 +34,9 @@ Memahami race condition pada operasi check-then-act. Program membuat 2 thread; t
 
 Struktur repository:
 ```
-readonly-fs/
-├── src/
+Sisop-FP-2025-IT-A09
+├── src
 │ └── readonly_fs.c 
-├── papers/
-│ ├── Paper1_FAST2017.pdf 
-│ └── Paper2_ACM2019.pdf 
 ├── README.md 
 └── .gitignore
 ```
