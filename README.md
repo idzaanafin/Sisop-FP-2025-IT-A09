@@ -42,7 +42,8 @@ Sisop-FP-2025-IT-A09
 
 **Teori**
 
-FUSE (*Filesystem in Userspace*) adalah framework untuk mengembangkan sistem file di ruang pengguna tanpa perlu menulis modul kernel. FUSE terdiri dari dua komponen utama:
+FUSE (*Filesystem in Userspace*) adalah framework untuk mengembangkan sistem file di ruang pengguna tanpa perlu menulis modul kernel. Bagian kernel diimplementasikan sebagai modul kernel Linux
+yang, ketika di-load, mendaftarkan driver sistem berkas FUSE dengan VFS Linux.FUSE terdiri dari dua komponen utama:
 - Modul kernel: menerima request dari sistem dan meneruskannya ke daemon pengguna.
 - FUSE daemon: menangani operasi file system secara logika.
 
