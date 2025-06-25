@@ -27,18 +27,50 @@ Read Only File
 Buatlah sebuah FUSE file system sederhana yang me-mount sebuah direktori dalam mode read-only. Kalian hanya dapat melihat dan membaca file, serta masuk ke dalam subdirektori. Maka dari itu, setiap upaya untuk memodifikasi (membuat, menulis, menghapus) harus gagal dengan error "Gabisa ya huhu".
 
 ### Catatan
+Install library yang dibutuhkan:
+
+- Linux  : `sudo apt install libfuse3-dev`
+- Mac    : `brew install --cask macfuse`
+- Windows: `install dari https://winfsp.dev/`
+
+Kompilasi kode:
+```
+- Linux   : gcc readonly_fs.c -o myfs `pkg-config fuse3 --cflags --libs`
+- Mac     : gcc readonly_fs.c -o myfs `pkg-config fuse --cflags --libs`
+- Windows : gcc readonly_.c -o myfs -I/mingw64/include -L/mingw64/lib -lfuse
+```
+
+Testing:
+
+- create source directory : `mkdir source_dir`
+- create mounting point :  `mkdir mount_dir`
 
 Struktur repository:
-```
-Sisop-FP-2025-IT-A09
+
+- sebelum dijalankan
+```Sisop-FP-2025-IT-A09
+├── mount_dir
+├── source_dir
+│   └── tes.txt
 ├── src
 │ └── readonly_fs.c 
-└─── README.md 
+└─── README.md
+```
+
+- setelah dijalankan
+```Sisop-FP-2025-IT-A09
+├── mount_dir
+│   └── tes.txt
+├── source_dir
+│   └── tes.txt
+├── src
+│ └── readonly_fs.c 
+└─── README.md
 ```
 
 ## Pengerjaan
 
-### 1. Implemenetasi FUSE  
+### 1. Implemenetasi FUSE Dasar
 
 **Teori**
 
@@ -56,9 +88,8 @@ Dalam konteks ini, sistem file dibuat hanya untuk **read-only** itu berarti jika
 Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
 
 1. **Mount Source Folder**  
-   Direktori sumber ditentukan sebagai:
-   ```c
-   static const char *source_dir = "/Users/dina-r/Desktop/finalssp/source_dir"; (direktori menyesuaikan yang ingin dimount)
+   Direktori sumber ditentukan sebagai:   
+   `static const char *source_dir = "/Users/dina-r/Desktop/Sisop-FP-2025-IT-A09/source_dir";` (direktori menyesuaikan yang ingin dimount harus full path)
 2. **Operasi yang Diizinkan**
    
    Fungsi berikut diimplementasikan untuk mendukung operasi navigasi dan baca:
@@ -83,14 +114,7 @@ Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
    .write   = (void*) xmp_writeblock,
    .create  = (void*) xmp_writeblock,
    ```
-5. **Kompilasi dan Eksekusi**
-   Kompilasi memerlukan librari fuse tambahan
-   ## Linux
-      - gcc -Wall namefile.c -o namefile `pkg-config fuse3 --cflags --libs`
-   ## Mac
-      - gcc -Wall -lfuse namefile.c -o namefile
 
-...
 
 **Video Menjalankan Program**
 ...
