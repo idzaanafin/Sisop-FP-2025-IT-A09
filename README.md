@@ -53,8 +53,7 @@ FUSE (*Filesystem in Userspace*) adalah framework untuk mengembangkan sistem fil
 
 Salah satu keuntungan utama dari FUSE adalah kemudahan pengembangan dan keamanan karena crash di user-space tidak menyebabkan sistem crash.
 
-Dalam konteks ini, sistem file dibuat hanya untuk **read-only**, sehingga operasi seperti `write`, `create`, `unlink`, `mkdir`, `rename` harus diblokir. Error khas untuk filesystem semacam ini adalah `EROFS` (*Error Read-Only File System*).
-
+Dalam konteks ini, sistem file dibuat hanya untuk **read-only** itu berarti jika dalam file permission maka level hak aksesnya ialah *004* karena sistem file dibuat dengan hak akses non-root serta read-only (dengan urutan owner,groups,public) , sehingga operasi seperti write, create, unlink, mkdir, rename harus diblokir. Error khas untuk filesystem semacam ini adalah EROFS (*Error Read-Only File System*).
 **Solusi**
 
 Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
