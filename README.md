@@ -118,6 +118,7 @@ Solusi diimplementasikan dalam file `src/readonly_fs.c`. Beberapa poin penting:
 
 **Video Menjalankan Program**
 ...
+[[Link video demonstrasi program]](https://github.com/idzaanafin/Sisop-FP-2025-IT-A09/blob/main/Video%20Sisop.mov)
 
 ## Daftar Pustaka
 
